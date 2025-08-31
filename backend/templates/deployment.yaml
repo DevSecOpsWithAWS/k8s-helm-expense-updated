@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: expense
+  # these are replicaset labels
+  labels:
+    app: backend
+    tier: backend
+    project: expense
+spec:
+  replicas: {{ .Values.deployment.replicas }} #number of pod replicas
+  selector:
+  #replicaset use those labels to identify its pods
+    matchLabels:
+      app: backend
+      tier: backend
+      project: expense
+  #pod template
+  template:
+    metadata:
+      # these are pod labels
+      labels:
+        app: backend
+        tier: backend
+        project: expense
+    spec:
+      containers:
+        - name: nginx
+          image: joindevops/backend:{{ .Values.deployment.imageVersion }}
+          envFrom:
+            - configMapRef:
+                name: backend
