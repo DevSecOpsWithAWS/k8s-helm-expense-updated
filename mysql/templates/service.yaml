@@ -29,7 +29,6 @@ metadata:
     project: expense
     tier: db 
 spec:
-  clusterIP: None
   selector:
     app: mysql
     project: expense
